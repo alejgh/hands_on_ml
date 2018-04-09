@@ -75,12 +75,8 @@ class TestSoftmaxRegression(unittest.TestCase):
              [1,     3.442e-14, 1.71e-15]]
         )
 
-        self.clf.weights = theta
-        self.clf.num_classes = np.shape(theta)[0]
-        for i in range(self.clf.num_classes):
-            assert_array_almost_equal(proba[:, i],
-                                      self.clf._softmax_proba(X, i),
-                                      decimal=3)
+        self.clf.theta = theta
+        assert_array_almost_equal(proba, self.clf.predict_proba(X), decimal=3)
 
 
 if __name__ == '__main__':

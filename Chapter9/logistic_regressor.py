@@ -1,10 +1,14 @@
 import numpy as np
 import tensorflow as tf
 
+from tflogger import TFLogger
 from invalid_operation import InvalidOperationError
 
 
 class TFLogisticRegressor():
+    """ Logistic Regressor classifier implemented using TensorFlow.
+    """
+
     def __init__(self, batch_size=100, n_epochs=1000,
                  random_seed=42, learning_rate=0.01):
         self.X = tf.placeholder(tf.float64, None)
@@ -28,16 +32,25 @@ class TFLogisticRegressor():
         loss = tf.losses.log_loss(y, y_proba)
         optimizer = tf.train.GradientDescentOptimizer(self.learning_rate)
         training_op = optimizer.minimize(loss)
-        init = tf.global_variables_initializer()
 
+        logger = TFLogger(self.__class__.__name__)
+        logger.add_summary('Loss', loss, tf.summary.scalar)
+
+        init = tf.global_variables_initializer()
         n_batches = n // self.batch_size
-        with tf.Session() as sess:
+        with tf.Session() as sess, logger as log:
             sess.run(init)
             for epoch in range(self.n_epochs):
                 for batch_idx in range(n_batches):
                     X_batch, y_batch = self.fetch_next_batch(X, y, batch_idx)
-                    sess.run(training_op, feed_dict={self.X: np.asarray(X_batch),
-                                                     self.y: np.asarray(y_batch)})
+                    if batch_idx % 10 == 0:
+                        log.eval('Loss',
+                                 feed_dict={self.X: X_batch, self.y: y_batch},
+                                 session=sess)
+                        step = epoch * n_batches + batch_idx
+                        log.write_summaries(step)
+                    sess.run(training_op, feed_dict={self.X: X_batch,
+                                                     self.y: y_batch})
             self.theta = theta.eval()
 
     def fetch_next_batch(self, X, y, index):
