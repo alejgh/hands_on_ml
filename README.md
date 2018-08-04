@@ -7,3 +7,5 @@
 * [Chapter 6: Decision Trees](./Chapter6)
 * [Chapter 7: Ensemble Learning and Random Forests](./Chapter7)
 * [Chapter 8: Dimensionality Reduction](./Chapter8)
+* [Chapter 9: Up and Running with TensorFlow](./Chapter9)
+* [Chapter 10: Introduction to Artificial Neural Networks](./Chapter10)
