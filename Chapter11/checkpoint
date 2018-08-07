@@ -1,2 +1,2 @@
-model_checkpoint_path: "best_model_ex8.ckpt"
-all_model_checkpoint_paths: "best_model_ex8.ckpt"
+model_checkpoint_path: "mnist_digits_0-4.ckpt"
+all_model_checkpoint_paths: "mnist_digits_0-4.ckpt"
