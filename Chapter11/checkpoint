@@ -1,2 +1,2 @@
-model_checkpoint_path: "mnist_digits_0-4.ckpt"
-all_model_checkpoint_paths: "mnist_digits_0-4.ckpt"
+model_checkpoint_path: "my_mnist_model_final.ckpt"
+all_model_checkpoint_paths: "my_mnist_model_final.ckpt"
